@@ -4,14 +4,27 @@ from charms.reactive import Endpoint
 
 class PacemakerRemoteProvides(Endpoint):
 
-    def publish_info(self, remote_hostname, stonith_hostname=None,
+    def publish_info(self, remote_hostname, remote_ip, stonith_hostname=None,
                      enable_resources=True):
-        """
-        Publish the stonith info
+        """Publish the stonith info.
+
+
+       :param remote_hostname: The hostname of this unit
+       :type remote_hostname: str
+       :param remote_ip: The IP address that the c;uster should contanct this
+                         node on.
+       :type remote_ip: str
+       :param stonith_hostname: The name used by the stonith device to refer
+                                to this node.
+       :type stonith_hostname: str
+       :param enable_resources: Whether this node should run resources from
+                                the cluster.
+       :type enable_resources: bool
         """
         for relation in self.relations:
             relation.to_publish['stonith-hostname'] = stonith_hostname
             relation.to_publish['remote-hostname'] = remote_hostname
+            relation.to_publish['remote-ip'] = remote_ip
             relation.to_publish['enable-resources'] = enable_resources
 
     def get_pacemaker_key(self):

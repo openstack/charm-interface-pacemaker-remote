@@ -101,10 +101,12 @@ class TestPacemakerRemoteProvides(unittest.TestCase):
         self.relation_obj._relations = [mock_rel]
         self.relation_obj.publish_info(
             'node1.az1.local',
+            '10.0.0.10',
             stonith_hostname='node1.stonith',
             enable_resources=True)
         expect = {
             'remote-hostname': 'node1.az1.local',
+            'remote-ip': '10.0.0.10',
             'stonith-hostname': 'node1.stonith',
             'enable-resources': True}
         self.assertEqual(
